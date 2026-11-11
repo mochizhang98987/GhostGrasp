@@ -4,7 +4,7 @@
   <name>ghost_mgg_core</name>
   <version>0.0.1</version>
   <description>ROS-free core helpers for GHOST-MGG.</description>
-  <maintainer email="693180059@qq.com">runfengling</maintainer>
+  <maintainer email="maintainer@example.com">GhostGrasp Maintainers</maintainer>
   <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>

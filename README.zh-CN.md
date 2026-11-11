@@ -4,8 +4,6 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-[在 YouTube 观看演示](https://www.youtube.com/watch?v=1ZADqmrzXGo) · [在 Bilibili 观看演示](https://www.bilibili.com/video/BV1yHbq69ERM)
-
 > **发布状态：** 当前仓库仅提供 GhostGrasp 项目介绍和展示图片。论文、源代码、训练模型、配置文件与评测工具将在后续版本中发布。
 
 ![GhostGrasp 总览：透明物体造成的深度失效在主动红外下仍然可见，并可支持明亮和黑暗环境中的顶部抓取。](assets/ghostgrasp_overview.png)
@@ -91,13 +89,6 @@ geometry hypothesis → bridge → guarded taught-grasp service → myCobot
 ```
 
 感知结果通过统一的ROS 2假设接口传递。受保护执行器会检查目标时间、运动使能、抓取高度边界和低速执行条件，然后才向机器人发送命令。全部150次实验均使用这条真实执行通路。
-
-## 演示视频
-
-- [YouTube — GhostGrasp 演示](https://www.youtube.com/watch?v=1ZADqmrzXGo)
-- [Bilibili — GhostGrasp 演示](https://www.bilibili.com/video/BV1yHbq69ERM)
-
-视频包含明亮与黑暗抓取、主动红外观测、持续假设、光照切换、多物体感知和典型失败案例。
 
 ## 当前适用范围
 

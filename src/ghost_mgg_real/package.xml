@@ -4,7 +4,7 @@
   <name>ghost_mgg_real</name>
   <version>0.0.0</version>
   <description>Real hardware bringup assets for GHOST-MGG sensors and robot-side validation.</description>
-  <maintainer email="693180059@qq.com">runfengling</maintainer>
+  <maintainer email="maintainer@example.com">GhostGrasp Maintainers</maintainer>
   <license>TODO</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>

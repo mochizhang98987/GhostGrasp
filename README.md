@@ -4,8 +4,6 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-[Watch on YouTube](https://www.youtube.com/watch?v=1ZADqmrzXGo) · [Watch on Bilibili](https://www.bilibili.com/video/BV1yHbq69ERM)
-
 > **Release status:** this repository currently hosts the GhostGrasp project page and visual material. The paper, source code, trained models, configurations, and evaluation tools will be added in a later release.
 
 ![GhostGrasp overview: transparent-object depth failures remain visible to active infrared sensing and support top grasping in daylight and darkness.](assets/ghostgrasp_overview.png)
@@ -91,10 +89,3 @@ geometry hypothesis → bridge → guarded taught-grasp service → myCobot
 ```
 
 The perception output is carried through a standard ROS 2 hypothesis interface. A guarded executor checks target age, motion enablement, grasp-height limits, and low-speed execution before commanding the robot. This path was used for all 150 reported trials.
-
-## Demonstration videos
-
-- [YouTube — GhostGrasp demonstration](https://www.youtube.com/watch?v=1ZADqmrzXGo)
-- [Bilibili — GhostGrasp demonstration](https://www.bilibili.com/video/BV1yHbq69ERM)
-
-The videos show daylight and dark grasping, active-IR observations, maintained hypotheses, light transitions, multi-object perception, and representative failures.

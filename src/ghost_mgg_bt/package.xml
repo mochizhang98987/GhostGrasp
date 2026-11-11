@@ -3,7 +3,7 @@
   <name>ghost_mgg_bt</name>
   <version>0.0.1</version>
   <description>Strict BehaviorTree.CPP runner and BT nodes for GHOST-MGG.</description>
-  <maintainer email="693180059@qq.com">runfengling</maintainer>
+  <maintainer email="maintainer@example.com">GhostGrasp Maintainers</maintainer>
   <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>

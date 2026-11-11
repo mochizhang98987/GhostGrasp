@@ -3,7 +3,7 @@
   <name>ghost_mgg_interfaces</name>
   <version>0.0.1</version>
   <description>Strong ROS 2 interfaces for the GHOST-MGG M0 framework.</description>
-  <maintainer email="693180059@qq.com">runfengling</maintainer>
+  <maintainer email="maintainer@example.com">GhostGrasp Maintainers</maintainer>
   <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
