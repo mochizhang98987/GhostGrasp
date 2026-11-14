@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <package format="3">
-  <name>ghost_mgg_backends</name>
+  <name>infrared_grasp_backends</name>
   <version>0.0.1</version>
-  <description>Recovery and execution backend action servers for GHOST-MGG.</description>
-  <maintainer email="maintainer@example.com">GhostGrasp Maintainers</maintainer>
+  <description>Recovery and execution backend action servers for INFRARED-GRASP.</description>
+  <maintainer email="maintainer@example.com">Infrared Grasp Maintainers</maintainer>
   <license>MIT</license>
   <buildtool_depend>ament_cmake</buildtool_depend>
   <depend>control_msgs</depend>
-  <depend>ghost_mgg_interfaces</depend>
+  <depend>infrared_grasp_interfaces</depend>
   <depend>moveit_msgs</depend>
   <depend>moveit_ros_planning_interface</depend>
   <depend>rclcpp</depend>

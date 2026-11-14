@@ -1,4 +1,4 @@
-#include "ghost_mgg_backends/mask_extrusion_recovery_server.hpp"
+#include "infrared_grasp_backends/mask_extrusion_recovery_server.hpp"
 
 #include <algorithm>
 #include <chrono>
@@ -8,10 +8,10 @@
 #include <string>
 #include <thread>
 
-#include "ghost_mgg_backends/m2_scene_primitives.hpp"
-#include "ghost_mgg_backends/recover_status.hpp"
+#include "infrared_grasp_backends/m2_scene_primitives.hpp"
+#include "infrared_grasp_backends/recover_status.hpp"
 
-namespace ghost_mgg_backends
+namespace infrared_grasp_backends
 {
 namespace
 {
@@ -31,12 +31,12 @@ MaskExtrusionRecoveryServer::MaskExtrusionRecoveryServer(const rclcpp::NodeOptio
 {
   const auto action_name = this->declare_parameter<std::string>("action_name", kDefaultActionName);
   const auto hypotheses_topic = this->declare_parameter<std::string>(
-    "hypotheses_topic", "/ghost_mgg/hypotheses/mask_extrusion");
+    "hypotheses_topic", "/infrared_grasp/hypotheses/mask_extrusion");
   this->declare_parameter<std::string>("mode", "success");
   this->declare_parameter<std::string>("preferred_hypothesis_id", "");
   this->declare_parameter<bool>("strict_preferred_hypothesis", false);
   this->declare_parameter<int>("response_delay_ms", 0);
-  hypotheses_pub_ = this->create_publisher<ghost_mgg_interfaces::msg::GeometryHypothesisArray>(
+  hypotheses_pub_ = this->create_publisher<infrared_grasp_interfaces::msg::GeometryHypothesisArray>(
     hypotheses_topic,
     rclcpp::QoS(1).transient_local().reliable());
 
@@ -160,7 +160,7 @@ void MaskExtrusionRecoveryServer::execute(
   }
 
   const auto limit = std::min<std::size_t>(goal->max_hypotheses, hypotheses.size());
-  result->hypotheses = std::vector<ghost_mgg_interfaces::msg::GeometryHypothesis>(
+  result->hypotheses = std::vector<infrared_grasp_interfaces::msg::GeometryHypothesis>(
     hypotheses.begin(), hypotheses.begin() + limit);
   publish_hypotheses(*goal, result->hypotheses);
   const auto best_score = result->hypotheses.empty() ? 0.0 : result->hypotheses.front().score.total;
@@ -213,9 +213,9 @@ void MaskExtrusionRecoveryServer::publish_feedback(
 
 void MaskExtrusionRecoveryServer::publish_hypotheses(
   const RecoverGeometry::Goal & goal,
-  const std::vector<ghost_mgg_interfaces::msg::GeometryHypothesis> & hypotheses) const
+  const std::vector<infrared_grasp_interfaces::msg::GeometryHypothesis> & hypotheses) const
 {
-  ghost_mgg_interfaces::msg::GeometryHypothesisArray message;
+  infrared_grasp_interfaces::msg::GeometryHypothesisArray message;
   message.header.stamp = this->now();
   message.header.frame_id = "world";
   message.trial_id = goal.trial_id;
@@ -225,4 +225,4 @@ void MaskExtrusionRecoveryServer::publish_hypotheses(
   hypotheses_pub_->publish(message);
 }
 
-}  // namespace ghost_mgg_backends
+}  // namespace infrared_grasp_backends

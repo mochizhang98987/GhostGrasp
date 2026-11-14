@@ -7,28 +7,21 @@
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_action/rclcpp_action.hpp>
 
-#include "ghost_mgg_interfaces/action/recover_geometry.hpp"
-#include "ghost_mgg_interfaces/msg/geometry_hypothesis.hpp"
-#include "ghost_mgg_backends/recover_status.hpp"
+#include "infrared_grasp_interfaces/action/recover_geometry.hpp"
+#include "infrared_grasp_interfaces/msg/geometry_hypothesis_array.hpp"
 
-namespace ghost_mgg_backends
+namespace infrared_grasp_backends
 {
 
-using GeometryHypothesis = ghost_mgg_interfaces::msg::GeometryHypothesis;
-using RecoverGeometry = ghost_mgg_interfaces::action::RecoverGeometry;
+using RecoverGeometry = infrared_grasp_interfaces::action::RecoverGeometry;
 
-std::vector<GeometryHypothesis> make_dummy_hypotheses(
-  const std::string & backend_name,
-  const std::string & trial_id,
-  const std::string & observation_id,
-  std::size_t max_hypotheses);
-
-class DummyRecoveryServer : public rclcpp::Node
+class MaskExtrusionRecoveryServer : public rclcpp::Node
 {
 public:
   using GoalHandleRecoverGeometry = rclcpp_action::ServerGoalHandle<RecoverGeometry>;
 
-  explicit DummyRecoveryServer(const rclcpp::NodeOptions & options = rclcpp::NodeOptions());
+  explicit MaskExtrusionRecoveryServer(
+    const rclcpp::NodeOptions & options = rclcpp::NodeOptions());
 
 private:
   rclcpp_action::GoalResponse handle_goal(
@@ -50,8 +43,12 @@ private:
     const std::string & stage,
     double progress,
     double current_best_score) const;
+  void publish_hypotheses(
+    const RecoverGeometry::Goal & goal,
+    const std::vector<infrared_grasp_interfaces::msg::GeometryHypothesis> & hypotheses) const;
 
   rclcpp_action::Server<RecoverGeometry>::SharedPtr action_server_;
+  rclcpp::Publisher<infrared_grasp_interfaces::msg::GeometryHypothesisArray>::SharedPtr hypotheses_pub_;
 };
 
-}  // namespace ghost_mgg_backends
+}  // namespace infrared_grasp_backends

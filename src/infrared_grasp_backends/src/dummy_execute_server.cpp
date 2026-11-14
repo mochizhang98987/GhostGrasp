@@ -1,4 +1,4 @@
-#include "ghost_mgg_backends/dummy_execute_server.hpp"
+#include "infrared_grasp_backends/dummy_execute_server.hpp"
 
 #include <algorithm>
 #include <chrono>
@@ -7,7 +7,7 @@
 #include <string>
 #include <thread>
 
-namespace ghost_mgg_backends
+namespace infrared_grasp_backends
 {
 namespace
 {
@@ -151,4 +151,4 @@ void DummyExecuteServer::publish_feedback(
   goal_handle->publish_feedback(feedback);
 }
 
-}  // namespace ghost_mgg_backends
+}  // namespace infrared_grasp_backends

@@ -1,6 +1,6 @@
-#include "ghost_mgg_backends/moveit_sim_execute_server.hpp"
+#include "infrared_grasp_backends/moveit_sim_execute_server.hpp"
 
-#include "ghost_mgg_backends/m2_scene_primitives.hpp"
+#include "infrared_grasp_backends/m2_scene_primitives.hpp"
 
 #include <algorithm>
 #include <array>
@@ -25,7 +25,7 @@
 #include <shape_msgs/msg/solid_primitive.hpp>
 #include <trajectory_msgs/msg/joint_trajectory_point.hpp>
 
-namespace ghost_mgg_backends
+namespace infrared_grasp_backends
 {
 namespace
 {
@@ -916,4 +916,4 @@ void MoveItSimExecuteServer::execute(
   }
 }
 
-}  // namespace ghost_mgg_backends
+}  // namespace infrared_grasp_backends

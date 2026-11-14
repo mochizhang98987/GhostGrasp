@@ -12,21 +12,21 @@
 #include <thread>
 #include <vector>
 
-#include "ghost_mgg_backends/m2_scene_primitives.hpp"
-#include "ghost_mgg_backends/mask_extrusion_recovery_server.hpp"
-#include "ghost_mgg_backends/recover_status.hpp"
-#include "ghost_mgg_interfaces/action/recover_geometry.hpp"
-#include "ghost_mgg_interfaces/msg/geometry_hypothesis.hpp"
-#include "ghost_mgg_interfaces/msg/grasp_candidate.hpp"
+#include "infrared_grasp_backends/m2_scene_primitives.hpp"
+#include "infrared_grasp_backends/mask_extrusion_recovery_server.hpp"
+#include "infrared_grasp_backends/recover_status.hpp"
+#include "infrared_grasp_interfaces/action/recover_geometry.hpp"
+#include "infrared_grasp_interfaces/msg/geometry_hypothesis.hpp"
+#include "infrared_grasp_interfaces/msg/grasp_candidate.hpp"
 
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_action/rclcpp_action.hpp>
 
 namespace
 {
-using GeometryHypothesis = ghost_mgg_interfaces::msg::GeometryHypothesis;
-using GraspCandidate = ghost_mgg_interfaces::msg::GraspCandidate;
-using RecoverGeometry = ghost_mgg_interfaces::action::RecoverGeometry;
+using GeometryHypothesis = infrared_grasp_interfaces::msg::GeometryHypothesis;
+using GraspCandidate = infrared_grasp_interfaces::msg::GraspCandidate;
+using RecoverGeometry = infrared_grasp_interfaces::action::RecoverGeometry;
 
 struct SceneObject
 {
@@ -43,8 +43,8 @@ constexpr double kExpectedTopPregraspLift = 0.080;
 
 std::string read_visual_world_sdf()
 {
-  const auto path = std::filesystem::path(GHOST_MGG_BACKENDS_SOURCE_DIR)
-    .parent_path() / "ghost_mgg_sim" / "worlds" / "m2_tabletop_visual.sdf";
+  const auto path = std::filesystem::path(INFRARED_GRASP_BACKENDS_SOURCE_DIR)
+    .parent_path() / "infrared_grasp_sim" / "worlds" / "m2_tabletop_visual.sdf";
   std::ifstream in(path);
   if (!in) {
     throw std::runtime_error("failed to open M2 visual world SDF: " + path.string());
@@ -56,8 +56,8 @@ std::string read_visual_world_sdf()
 
 std::string read_model_sdf(const std::string & model_name)
 {
-  const auto path = std::filesystem::path(GHOST_MGG_BACKENDS_SOURCE_DIR)
-    .parent_path() / "ghost_mgg_sim" / "models" / model_name / "model.sdf";
+  const auto path = std::filesystem::path(INFRARED_GRASP_BACKENDS_SOURCE_DIR)
+    .parent_path() / "infrared_grasp_sim" / "models" / model_name / "model.sdf";
   std::ifstream in(path);
   if (!in) {
     throw std::runtime_error("failed to open model SDF: " + path.string());
@@ -173,7 +173,7 @@ public:
       rclcpp::Parameter("strict_preferred_hypothesis", strict_preferred_hypothesis),
       rclcpp::Parameter("response_delay_ms", 1),
     });
-    server_ = std::make_shared<ghost_mgg_backends::MaskExtrusionRecoveryServer>(server_options);
+    server_ = std::make_shared<infrared_grasp_backends::MaskExtrusionRecoveryServer>(server_options);
 
     rclcpp::NodeOptions client_options;
     client_options.context(context_);
@@ -206,7 +206,7 @@ public:
 private:
   std::shared_ptr<rclcpp::Context> context_;
   rclcpp::executors::MultiThreadedExecutor executor_;
-  std::shared_ptr<ghost_mgg_backends::MaskExtrusionRecoveryServer> server_;
+  std::shared_ptr<infrared_grasp_backends::MaskExtrusionRecoveryServer> server_;
   rclcpp::Node::SharedPtr client_node_;
   std::thread spin_thread_;
 };
@@ -214,7 +214,7 @@ private:
 
 TEST(MaskExtrusionBaseline, BuildsDeterministicRankedM2Hypotheses)
 {
-  const auto hypotheses = ghost_mgg_backends::make_m2_mask_extrusion_hypotheses(10);
+  const auto hypotheses = infrared_grasp_backends::make_m2_mask_extrusion_hypotheses(10);
   const auto world_sdf = read_visual_world_sdf();
   const std::vector<SceneObject> scene_objects{
     {"mask_extrusion_glass_block", GeometryHypothesis::SHAPE_BOX, "glass_block", "glass_block_visual", 0.82, 0.80},
@@ -309,16 +309,16 @@ TEST(MaskExtrusionBaseline, BuildsDeterministicRankedM2Hypotheses)
 
 TEST(MaskExtrusionBaseline, RespectsMaxHypotheses)
 {
-  EXPECT_EQ(ghost_mgg_backends::make_m2_mask_extrusion_hypotheses(0).size(), 0u);
-  EXPECT_EQ(ghost_mgg_backends::make_m2_mask_extrusion_hypotheses(1).size(), 1u);
-  EXPECT_EQ(ghost_mgg_backends::make_m2_mask_extrusion_hypotheses(2).size(), 2u);
-  EXPECT_EQ(ghost_mgg_backends::make_m2_mask_extrusion_hypotheses(99).size(), 4u);
+  EXPECT_EQ(infrared_grasp_backends::make_m2_mask_extrusion_hypotheses(0).size(), 0u);
+  EXPECT_EQ(infrared_grasp_backends::make_m2_mask_extrusion_hypotheses(1).size(), 1u);
+  EXPECT_EQ(infrared_grasp_backends::make_m2_mask_extrusion_hypotheses(2).size(), 2u);
+  EXPECT_EQ(infrared_grasp_backends::make_m2_mask_extrusion_hypotheses(99).size(), 4u);
 }
 
 TEST(MaskExtrusionBaseline, ExposesRecoverStatusConstants)
 {
-  EXPECT_EQ(ghost_mgg_backends::kRecoverStatusSucceeded, 1);
-  EXPECT_EQ(ghost_mgg_backends::kRecoverStatusCanceled, 5);
+  EXPECT_EQ(infrared_grasp_backends::kRecoverStatusSucceeded, 1);
+  EXPECT_EQ(infrared_grasp_backends::kRecoverStatusCanceled, 5);
 }
 
 TEST(MaskExtrusionRecoveryServer, ReturnsScenePriorHypothesesThroughActionContract)
@@ -349,7 +349,7 @@ TEST(MaskExtrusionRecoveryServer, ReturnsScenePriorHypothesesThroughActionContra
 
   ASSERT_EQ(wrapped_result.code, rclcpp_action::ResultCode::SUCCEEDED);
   ASSERT_NE(wrapped_result.result, nullptr);
-  EXPECT_EQ(wrapped_result.result->status, ghost_mgg_backends::kRecoverStatusSucceeded);
+  EXPECT_EQ(wrapped_result.result->status, infrared_grasp_backends::kRecoverStatusSucceeded);
   EXPECT_EQ(wrapped_result.result->backend_name, "mask_extrusion");
   ASSERT_EQ(wrapped_result.result->hypotheses.size(), 2u);
   EXPECT_EQ(wrapped_result.result->hypotheses.front().hypothesis_id, "mask_extrusion_glass_block");

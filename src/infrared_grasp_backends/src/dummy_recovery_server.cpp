@@ -1,4 +1,4 @@
-#include "ghost_mgg_backends/dummy_recovery_server.hpp"
+#include "infrared_grasp_backends/dummy_recovery_server.hpp"
 
 #include <algorithm>
 #include <chrono>
@@ -9,15 +9,15 @@
 #include <utility>
 #include <vector>
 
-#include "ghost_mgg_interfaces/msg/grasp_candidate.hpp"
-#include "ghost_mgg_interfaces/msg/score_breakdown.hpp"
+#include "infrared_grasp_interfaces/msg/grasp_candidate.hpp"
+#include "infrared_grasp_interfaces/msg/score_breakdown.hpp"
 
-namespace ghost_mgg_backends
+namespace infrared_grasp_backends
 {
 namespace
 {
-using GraspCandidate = ghost_mgg_interfaces::msg::GraspCandidate;
-using ScoreBreakdown = ghost_mgg_interfaces::msg::ScoreBreakdown;
+using GraspCandidate = infrared_grasp_interfaces::msg::GraspCandidate;
+using ScoreBreakdown = infrared_grasp_interfaces::msg::ScoreBreakdown;
 
 constexpr const char * kDefaultActionName = "/geometry_backends/dummy/recover";
 
@@ -286,4 +286,4 @@ void DummyRecoveryServer::publish_feedback(
   goal_handle->publish_feedback(feedback);
 }
 
-}  // namespace ghost_mgg_backends
+}  // namespace infrared_grasp_backends

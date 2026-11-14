@@ -1,4 +1,4 @@
-#include "ghost_mgg_backends/mycobot_sim_execute_server.hpp"
+#include "infrared_grasp_backends/mycobot_sim_execute_server.hpp"
 
 #include <algorithm>
 #include <chrono>
@@ -15,7 +15,7 @@
 #include <builtin_interfaces/msg/duration.hpp>
 #include <trajectory_msgs/msg/joint_trajectory_point.hpp>
 
-namespace ghost_mgg_backends
+namespace infrared_grasp_backends
 {
 namespace
 {
@@ -521,4 +521,4 @@ void MyCobotSimExecuteServer::publish_feedback(
   goal_handle->publish_feedback(feedback);
 }
 
-}  // namespace ghost_mgg_backends
+}  // namespace infrared_grasp_backends

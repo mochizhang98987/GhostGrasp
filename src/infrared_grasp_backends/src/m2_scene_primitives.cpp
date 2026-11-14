@@ -1,4 +1,4 @@
-#include "ghost_mgg_backends/m2_scene_primitives.hpp"
+#include "infrared_grasp_backends/m2_scene_primitives.hpp"
 
 #include <algorithm>
 #include <cmath>
@@ -8,15 +8,15 @@
 
 #include <geometry_msgs/msg/quaternion.hpp>
 
-#include "ghost_mgg_interfaces/msg/grasp_candidate.hpp"
-#include "ghost_mgg_interfaces/msg/score_breakdown.hpp"
+#include "infrared_grasp_interfaces/msg/grasp_candidate.hpp"
+#include "infrared_grasp_interfaces/msg/score_breakdown.hpp"
 
-namespace ghost_mgg_backends
+namespace infrared_grasp_backends
 {
 namespace
 {
-using GraspCandidate = ghost_mgg_interfaces::msg::GraspCandidate;
-using ScoreBreakdown = ghost_mgg_interfaces::msg::ScoreBreakdown;
+using GraspCandidate = infrared_grasp_interfaces::msg::GraspCandidate;
+using ScoreBreakdown = infrared_grasp_interfaces::msg::ScoreBreakdown;
 
 constexpr double kPi = 3.14159265358979323846;
 constexpr double kTopGraspOffsetAboveObjectTop = 0.005;
@@ -197,4 +197,4 @@ std::vector<GeometryHypothesis> make_m2_mask_extrusion_hypotheses(std::size_t ma
   return std::vector<GeometryHypothesis>(all_hypotheses.begin(), all_hypotheses.begin() + limit);
 }
 
-}  // namespace ghost_mgg_backends
+}  // namespace infrared_grasp_backends

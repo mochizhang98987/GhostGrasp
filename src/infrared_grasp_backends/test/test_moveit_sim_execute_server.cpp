@@ -9,14 +9,14 @@
 #include <control_msgs/action/follow_joint_trajectory.hpp>
 #include <shape_msgs/msg/solid_primitive.hpp>
 
-#include "ghost_mgg_backends/moveit_sim_execute_server.hpp"
-#include "ghost_mgg_interfaces/msg/geometry_hypothesis.hpp"
-#include "ghost_mgg_interfaces/msg/grasp_candidate.hpp"
+#include "infrared_grasp_backends/moveit_sim_execute_server.hpp"
+#include "infrared_grasp_interfaces/msg/geometry_hypothesis.hpp"
+#include "infrared_grasp_interfaces/msg/grasp_candidate.hpp"
 
 namespace
 {
-using GeometryHypothesis = ghost_mgg_interfaces::msg::GeometryHypothesis;
-using GraspCandidate = ghost_mgg_interfaces::msg::GraspCandidate;
+using GeometryHypothesis = infrared_grasp_interfaces::msg::GeometryHypothesis;
+using GraspCandidate = infrared_grasp_interfaces::msg::GraspCandidate;
 
 GeometryHypothesis make_box_hypothesis()
 {
@@ -51,7 +51,7 @@ TEST(MoveItSimExecuteServer, SelectsFirstValidGraspCandidate)
 
   hypothesis.grasp_candidates = {rejected, valid};
 
-  const auto selected = ghost_mgg_backends::select_first_valid_grasp_candidate(hypothesis);
+  const auto selected = infrared_grasp_backends::select_first_valid_grasp_candidate(hypothesis);
 
   ASSERT_TRUE(selected.has_value());
   EXPECT_EQ(selected->grasp_id, "valid");
@@ -66,7 +66,7 @@ TEST(MoveItSimExecuteServer, RejectsHypothesisWithoutValidGraspCandidate)
   unknown.validation_state = GraspCandidate::VALIDATION_UNKNOWN;
   hypothesis.grasp_candidates = {unknown};
 
-  const auto selected = ghost_mgg_backends::select_first_valid_grasp_candidate(hypothesis);
+  const auto selected = infrared_grasp_backends::select_first_valid_grasp_candidate(hypothesis);
 
   EXPECT_FALSE(selected.has_value());
 }
@@ -77,12 +77,12 @@ TEST(MoveItSimExecuteServer, UsesTargetFrameForPositionOnlyTargets)
   target.header.frame_id = "world";
 
   EXPECT_EQ(
-    ghost_mgg_backends::pose_reference_frame_for_target(target, "base_link"),
+    infrared_grasp_backends::pose_reference_frame_for_target(target, "base_link"),
     "world");
 
   target.header.frame_id.clear();
   EXPECT_EQ(
-    ghost_mgg_backends::pose_reference_frame_for_target(target, "base_link"),
+    infrared_grasp_backends::pose_reference_frame_for_target(target, "base_link"),
     "base_link");
 }
 
@@ -90,7 +90,7 @@ TEST(MoveItSimExecuteServer, BuildsBoxProxyCollisionObject)
 {
   const auto hypothesis = make_box_hypothesis();
 
-  const auto object = ghost_mgg_backends::make_proxy_collision_object(hypothesis, "trial_123");
+  const auto object = infrared_grasp_backends::make_proxy_collision_object(hypothesis, "trial_123");
 
   EXPECT_EQ(object.header.frame_id, "world");
   EXPECT_EQ(object.id, "trial_123_red_cube_proxy");
@@ -116,7 +116,7 @@ TEST(MoveItSimExecuteServer, BuildsCylinderProxyCollisionObject)
   hypothesis.dimensions_m.y = 0.030;
   hypothesis.dimensions_m.z = 0.040;
 
-  const auto object = ghost_mgg_backends::make_proxy_collision_object(hypothesis, "trial_123");
+  const auto object = infrared_grasp_backends::make_proxy_collision_object(hypothesis, "trial_123");
 
   EXPECT_EQ(object.id, "trial_123_blue_cylinder_proxy");
   ASSERT_EQ(object.primitives.size(), 1u);
@@ -134,7 +134,7 @@ TEST(MoveItSimExecuteServer, BuildsPaddedProxyCollisionObject)
 {
   const auto hypothesis = make_box_hypothesis();
 
-  const auto object = ghost_mgg_backends::make_padded_proxy_collision_object(
+  const auto object = infrared_grasp_backends::make_padded_proxy_collision_object(
     hypothesis, "trial_123", 0.006);
 
   ASSERT_EQ(object.primitives.size(), 1u);
@@ -147,7 +147,7 @@ TEST(MoveItSimExecuteServer, BuildsPaddedProxyCollisionObject)
 
 TEST(MoveItSimExecuteServer, BuildsM2ObstacleObjectsExcludingActiveTarget)
 {
-  const auto objects = ghost_mgg_backends::make_m2_scene_obstacle_collision_objects(
+  const auto objects = infrared_grasp_backends::make_m2_scene_obstacle_collision_objects(
     "mask_extrusion_red_cube", "trial_123_obstacle", 0.006);
 
   ASSERT_EQ(objects.size(), 3u);
@@ -179,7 +179,7 @@ TEST(MoveItSimExecuteServer, BuildsM2ObstacleObjectsExcludingActiveTarget)
 
 TEST(MoveItSimExecuteServer, BuildsM2ObstacleObjectsExcludingShortM4TargetIds)
 {
-  const auto objects = ghost_mgg_backends::make_m2_scene_obstacle_collision_objects(
+  const auto objects = infrared_grasp_backends::make_m2_scene_obstacle_collision_objects(
     "blue_cylinder", "trial_123_obstacle", 0.006);
 
   ASSERT_EQ(objects.size(), 3u);
@@ -201,8 +201,8 @@ TEST(MoveItSimExecuteServer, BuildsM2ObstacleObjectsExcludingShortM4TargetIds)
 
 TEST(MoveItSimExecuteServer, BuildsGripperOpenAndCloseCommands)
 {
-  const auto open_goal = ghost_mgg_backends::make_gripper_command_goal(0.15, 30.0);
-  const auto close_goal = ghost_mgg_backends::make_gripper_command_goal(-0.70, 45.0);
+  const auto open_goal = infrared_grasp_backends::make_gripper_command_goal(0.15, 30.0);
+  const auto close_goal = infrared_grasp_backends::make_gripper_command_goal(-0.70, 45.0);
 
   EXPECT_DOUBLE_EQ(open_goal.command.position, 0.15);
   EXPECT_DOUBLE_EQ(open_goal.command.max_effort, 30.0);
@@ -212,14 +212,14 @@ TEST(MoveItSimExecuteServer, BuildsGripperOpenAndCloseCommands)
 
 TEST(MoveItSimExecuteServer, DoesNotBlockOnCloseGripperResultByDefault)
 {
-  EXPECT_TRUE(ghost_mgg_backends::should_wait_for_gripper_command_result("open_gripper", false));
-  EXPECT_FALSE(ghost_mgg_backends::should_wait_for_gripper_command_result("close_gripper", false));
-  EXPECT_TRUE(ghost_mgg_backends::should_wait_for_gripper_command_result("close_gripper", true));
+  EXPECT_TRUE(infrared_grasp_backends::should_wait_for_gripper_command_result("open_gripper", false));
+  EXPECT_FALSE(infrared_grasp_backends::should_wait_for_gripper_command_result("close_gripper", false));
+  EXPECT_TRUE(infrared_grasp_backends::should_wait_for_gripper_command_result("close_gripper", true));
 }
 
 TEST(MoveItSimExecuteServer, ExpandsScalarGripperCommandToGroupTrajectory)
 {
-  const auto open_goal = ghost_mgg_backends::make_gripper_trajectory_goal(0.15, 0.30);
+  const auto open_goal = infrared_grasp_backends::make_gripper_trajectory_goal(0.15, 0.30);
   ASSERT_EQ(open_goal.trajectory.joint_names.size(), 6u);
   EXPECT_EQ(open_goal.trajectory.joint_names[0], "gripper_controller");
   EXPECT_EQ(open_goal.trajectory.joint_names[5], "gripper_right3_to_gripper_right1");
@@ -230,12 +230,12 @@ TEST(MoveItSimExecuteServer, ExpandsScalarGripperCommandToGroupTrajectory)
     open_goal.trajectory.points[0].positions,
     (std::vector<double>{0.15, 0.15, -0.15, -0.15, -0.15, 0.15}));
 
-  const auto close_goal = ghost_mgg_backends::make_gripper_trajectory_goal(-0.70, 0.30);
+  const auto close_goal = infrared_grasp_backends::make_gripper_trajectory_goal(-0.70, 0.30);
   EXPECT_EQ(
     close_goal.trajectory.points[0].positions,
     (std::vector<double>{-0.70, -0.70, 0.50, 0.70, 0.70, -0.50}));
 
-  const auto m2_contact_goal = ghost_mgg_backends::make_gripper_trajectory_goal(-0.38, 0.30);
+  const auto m2_contact_goal = infrared_grasp_backends::make_gripper_trajectory_goal(-0.38, 0.30);
   EXPECT_EQ(
     m2_contact_goal.trajectory.points[0].positions,
     (std::vector<double>{-0.38, -0.38, 0.38, 0.38, 0.38, -0.38}));
@@ -244,47 +244,47 @@ TEST(MoveItSimExecuteServer, ExpandsScalarGripperCommandToGroupTrajectory)
 TEST(MoveItSimExecuteServer, MapsM2HypothesesToGazeboTargetModels)
 {
   EXPECT_EQ(
-    ghost_mgg_backends::m2_model_name_for_hypothesis_id("mask_extrusion_glass_block"),
+    infrared_grasp_backends::m2_model_name_for_hypothesis_id("mask_extrusion_glass_block"),
     std::optional<std::string>("glass_block"));
   EXPECT_EQ(
-    ghost_mgg_backends::m2_model_name_for_hypothesis_id("glass_block"),
+    infrared_grasp_backends::m2_model_name_for_hypothesis_id("glass_block"),
     std::optional<std::string>("glass_block"));
   EXPECT_EQ(
-    ghost_mgg_backends::m2_model_name_for_hypothesis_id("mask_extrusion_red_cube"),
+    infrared_grasp_backends::m2_model_name_for_hypothesis_id("mask_extrusion_red_cube"),
     std::optional<std::string>("red_cube"));
   EXPECT_EQ(
-    ghost_mgg_backends::m2_model_name_for_hypothesis_id("red_cube"),
+    infrared_grasp_backends::m2_model_name_for_hypothesis_id("red_cube"),
     std::optional<std::string>("red_cube"));
   EXPECT_EQ(
-    ghost_mgg_backends::m2_model_name_for_hypothesis_id("mask_extrusion_blue_cylinder"),
+    infrared_grasp_backends::m2_model_name_for_hypothesis_id("mask_extrusion_blue_cylinder"),
     std::optional<std::string>("blue_cylinder"));
   EXPECT_EQ(
-    ghost_mgg_backends::m2_model_name_for_hypothesis_id("blue_cylinder"),
+    infrared_grasp_backends::m2_model_name_for_hypothesis_id("blue_cylinder"),
     std::optional<std::string>("blue_cylinder"));
   EXPECT_EQ(
-    ghost_mgg_backends::m2_model_name_for_hypothesis_id("mask_extrusion_green_cylinder"),
+    infrared_grasp_backends::m2_model_name_for_hypothesis_id("mask_extrusion_green_cylinder"),
     std::optional<std::string>("green_cylinder"));
   EXPECT_EQ(
-    ghost_mgg_backends::m2_model_name_for_hypothesis_id("green_cylinder"),
+    infrared_grasp_backends::m2_model_name_for_hypothesis_id("green_cylinder"),
     std::optional<std::string>("green_cylinder"));
   EXPECT_FALSE(
-    ghost_mgg_backends::m2_model_name_for_hypothesis_id("unknown_hypothesis").has_value());
+    infrared_grasp_backends::m2_model_name_for_hypothesis_id("unknown_hypothesis").has_value());
 }
 
 TEST(MoveItSimExecuteServer, ParsesGazeboModelPoseAndChecksLiftDelta)
 {
   const std::string output =
-    "Requesting state for world [ghost_mgg_m2_visual]...\n"
+    "Requesting state for world [infrared_grasp_m2_visual]...\n"
     "Model: [42]\n"
     "  - Name: glass_block\n"
     "  - Pose [ XYZ (m) ] [ RPY (rad) ]:\n"
     "    [0.002000 0.100000 0.772900]\n"
     "    [0.000000 0.000000 -0.350000]\n";
 
-  const auto z = ghost_mgg_backends::parse_gz_model_center_z(output);
+  const auto z = infrared_grasp_backends::parse_gz_model_center_z(output);
   ASSERT_TRUE(z.has_value());
   EXPECT_DOUBLE_EQ(*z, 0.772900);
-  EXPECT_TRUE(ghost_mgg_backends::target_lift_delta_satisfies(0.7525, *z, 0.010));
-  EXPECT_FALSE(ghost_mgg_backends::target_lift_delta_satisfies(0.7525, 0.7580, 0.010));
-  EXPECT_FALSE(ghost_mgg_backends::parse_gz_model_center_z("no pose here").has_value());
+  EXPECT_TRUE(infrared_grasp_backends::target_lift_delta_satisfies(0.7525, *z, 0.010));
+  EXPECT_FALSE(infrared_grasp_backends::target_lift_delta_satisfies(0.7525, 0.7580, 0.010));
+  EXPECT_FALSE(infrared_grasp_backends::parse_gz_model_center_z("no pose here").has_value());
 }

@@ -12,17 +12,17 @@
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_action/rclcpp_action.hpp>
 
-#include "ghost_mgg_backends/execute_status.hpp"
-#include "ghost_mgg_interfaces/action/execute_grasp.hpp"
-#include "ghost_mgg_interfaces/msg/geometry_hypothesis.hpp"
-#include "ghost_mgg_interfaces/msg/grasp_candidate.hpp"
+#include "infrared_grasp_backends/execute_status.hpp"
+#include "infrared_grasp_interfaces/action/execute_grasp.hpp"
+#include "infrared_grasp_interfaces/msg/geometry_hypothesis.hpp"
+#include "infrared_grasp_interfaces/msg/grasp_candidate.hpp"
 
-namespace ghost_mgg_backends
+namespace infrared_grasp_backends
 {
 
-using MoveItExecuteGrasp = ghost_mgg_interfaces::action::ExecuteGrasp;
-using GeometryHypothesis = ghost_mgg_interfaces::msg::GeometryHypothesis;
-using GraspCandidate = ghost_mgg_interfaces::msg::GraspCandidate;
+using MoveItExecuteGrasp = infrared_grasp_interfaces::action::ExecuteGrasp;
+using GeometryHypothesis = infrared_grasp_interfaces::msg::GeometryHypothesis;
+using GraspCandidate = infrared_grasp_interfaces::msg::GraspCandidate;
 using GripperCommand = control_msgs::action::GripperCommand;
 using GripperTrajectory = control_msgs::action::FollowJointTrajectory;
 
@@ -107,4 +107,4 @@ private:
   std::atomic_bool execute_active_{false};
 };
 
-}  // namespace ghost_mgg_backends
+}  // namespace infrared_grasp_backends

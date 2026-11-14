@@ -9,7 +9,7 @@
 #include <control_msgs/action/follow_joint_trajectory.hpp>
 #include <rclcpp_action/rclcpp_action.hpp>
 
-#include "ghost_mgg_backends/mycobot_sim_execute_server.hpp"
+#include "infrared_grasp_backends/mycobot_sim_execute_server.hpp"
 
 namespace
 {
@@ -18,19 +18,19 @@ using FollowJointTrajectory = control_msgs::action::FollowJointTrajectory;
 
 TEST(MyCobotSimExecuteServer, BuildsThreeNamedTrajectoryGoalsFromPreset)
 {
-  const ghost_mgg_backends::MyCobotTrajectoryPreset preset{
+  const infrared_grasp_backends::MyCobotTrajectoryPreset preset{
     {0.0, -0.6, 0.9, 0.0, -0.3, 0.0},
     {0.1, -0.5, 1.0, 0.0, -0.4, 0.1},
     {0.0, -0.7, 0.8, 0.0, -0.2, 0.0},
     1.25};
 
-  const auto goals = ghost_mgg_backends::make_mycobot_trajectory_goals(
-    ghost_mgg_backends::default_mycobot_joint_names(), preset);
+  const auto goals = infrared_grasp_backends::make_mycobot_trajectory_goals(
+    infrared_grasp_backends::default_mycobot_joint_names(), preset);
 
   ASSERT_EQ(goals.size(), 3u);
-  EXPECT_EQ(goals[0].trajectory.joint_names, ghost_mgg_backends::default_mycobot_joint_names());
-  EXPECT_EQ(goals[1].trajectory.joint_names, ghost_mgg_backends::default_mycobot_joint_names());
-  EXPECT_EQ(goals[2].trajectory.joint_names, ghost_mgg_backends::default_mycobot_joint_names());
+  EXPECT_EQ(goals[0].trajectory.joint_names, infrared_grasp_backends::default_mycobot_joint_names());
+  EXPECT_EQ(goals[1].trajectory.joint_names, infrared_grasp_backends::default_mycobot_joint_names());
+  EXPECT_EQ(goals[2].trajectory.joint_names, infrared_grasp_backends::default_mycobot_joint_names());
   ASSERT_EQ(goals[0].trajectory.points.size(), 1u);
   ASSERT_EQ(goals[1].trajectory.points.size(), 1u);
   ASSERT_EQ(goals[2].trajectory.points.size(), 1u);
@@ -43,21 +43,21 @@ TEST(MyCobotSimExecuteServer, BuildsThreeNamedTrajectoryGoalsFromPreset)
 
 TEST(MyCobotSimExecuteServer, ValidatesPresetJointArrayLengths)
 {
-  const ghost_mgg_backends::MyCobotTrajectoryPreset valid{
+  const infrared_grasp_backends::MyCobotTrajectoryPreset valid{
     {0.0, -0.6, 0.9, 0.0, -0.3, 0.0},
     {0.1, -0.5, 1.0, 0.0, -0.4, 0.1},
     {0.0, -0.7, 0.8, 0.0, -0.2, 0.0},
     1.0};
-  const ghost_mgg_backends::MyCobotTrajectoryPreset invalid{
+  const infrared_grasp_backends::MyCobotTrajectoryPreset invalid{
     {0.0, -0.6, 0.9},
     valid.grasp_positions,
     valid.retreat_positions,
     1.0};
 
-  const auto valid_result = ghost_mgg_backends::validate_mycobot_preset(
-    ghost_mgg_backends::default_mycobot_joint_names(), valid);
-  const auto invalid_result = ghost_mgg_backends::validate_mycobot_preset(
-    ghost_mgg_backends::default_mycobot_joint_names(), invalid);
+  const auto valid_result = infrared_grasp_backends::validate_mycobot_preset(
+    infrared_grasp_backends::default_mycobot_joint_names(), valid);
+  const auto invalid_result = infrared_grasp_backends::validate_mycobot_preset(
+    infrared_grasp_backends::default_mycobot_joint_names(), invalid);
 
   EXPECT_TRUE(valid_result.valid);
   EXPECT_TRUE(valid_result.failure_reason.empty());
@@ -70,34 +70,34 @@ TEST(MyCobotSimExecuteServer, MapsFollowJointTrajectoryFailuresToExecuteOutcomes
 {
   FollowJointTrajectory::Result ok_result;
   ok_result.error_code = FollowJointTrajectory::Result::SUCCESSFUL;
-  const auto ok = ghost_mgg_backends::map_mycobot_trajectory_outcome(
+  const auto ok = infrared_grasp_backends::map_mycobot_trajectory_outcome(
     rclcpp_action::ResultCode::SUCCEEDED, ok_result, "grasp");
 
   EXPECT_TRUE(ok.succeeded);
-  EXPECT_EQ(ok.status, ghost_mgg_backends::kExecuteStatusSucceeded);
+  EXPECT_EQ(ok.status, infrared_grasp_backends::kExecuteStatusSucceeded);
   EXPECT_TRUE(ok.failure_reason.empty());
 
   FollowJointTrajectory::Result tolerance_result;
   tolerance_result.error_code = FollowJointTrajectory::Result::GOAL_TOLERANCE_VIOLATED;
   tolerance_result.error_string = "joint tolerance violated";
-  const auto tolerance_failure = ghost_mgg_backends::map_mycobot_trajectory_outcome(
+  const auto tolerance_failure = infrared_grasp_backends::map_mycobot_trajectory_outcome(
     rclcpp_action::ResultCode::SUCCEEDED, tolerance_result, "retreat");
 
   EXPECT_FALSE(tolerance_failure.succeeded);
-  EXPECT_EQ(tolerance_failure.status, ghost_mgg_backends::kExecuteStatusFailed);
+  EXPECT_EQ(tolerance_failure.status, infrared_grasp_backends::kExecuteStatusFailed);
   EXPECT_NE(tolerance_failure.failure_reason.find("retreat"), std::string::npos);
   EXPECT_NE(tolerance_failure.failure_reason.find("joint tolerance violated"), std::string::npos);
 
-  const auto canceled = ghost_mgg_backends::map_mycobot_trajectory_outcome(
+  const auto canceled = infrared_grasp_backends::map_mycobot_trajectory_outcome(
     rclcpp_action::ResultCode::CANCELED, ok_result, "pregrasp");
   EXPECT_FALSE(canceled.succeeded);
-  EXPECT_EQ(canceled.status, ghost_mgg_backends::kExecuteStatusCanceled);
+  EXPECT_EQ(canceled.status, infrared_grasp_backends::kExecuteStatusCanceled);
 }
 
 TEST(MyCobotSimExecuteServer, CancelsPendingTrajectoryGoalsWithoutSavedGoalHandle)
 {
   const auto source_path =
-    std::filesystem::path(GHOST_MGG_BACKENDS_SOURCE_DIR) / "src/mycobot_sim_execute_server.cpp";
+    std::filesystem::path(INFRARED_GRASP_BACKENDS_SOURCE_DIR) / "src/mycobot_sim_execute_server.cpp";
   ASSERT_TRUE(std::filesystem::exists(source_path));
 
   std::ifstream in(source_path);

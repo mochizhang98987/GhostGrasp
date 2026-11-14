@@ -10,14 +10,14 @@
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_action/rclcpp_action.hpp>
 
-#include "ghost_mgg_backends/execute_status.hpp"
-#include "ghost_mgg_interfaces/action/execute_grasp.hpp"
+#include "infrared_grasp_backends/execute_status.hpp"
+#include "infrared_grasp_interfaces/action/execute_grasp.hpp"
 
-namespace ghost_mgg_backends
+namespace infrared_grasp_backends
 {
 
 using MyCobotFollowJointTrajectory = control_msgs::action::FollowJointTrajectory;
-using MyCobotExecuteGrasp = ghost_mgg_interfaces::action::ExecuteGrasp;
+using MyCobotExecuteGrasp = infrared_grasp_interfaces::action::ExecuteGrasp;
 
 struct MyCobotTrajectoryPreset
 {
@@ -105,4 +105,4 @@ private:
   FollowGoalHandle::SharedPtr active_trajectory_goal_;
 };
 
-}  // namespace ghost_mgg_backends
+}  // namespace infrared_grasp_backends
