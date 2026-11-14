@@ -22,13 +22,13 @@
 
     <xacro:property name="current_base" value="$(arg base_type)"/>
     <xacro:if value="${current_base == 'g_shape'}">
-        <xacro:include filename="$(find ghost_mgg_mycobot_description)/urdf/mech/g_shape_base_v2_0.urdf.xacro"/>
+        <xacro:include filename="$(find infrared_grasp_mycobot_description)/urdf/mech/g_shape_base_v2_0.urdf.xacro"/>
         <xacro:g_shape_base
             base_link="$(arg base_link)"
             prefix="$(arg prefix)"/>
     </xacro:if>
 
-    <xacro:include filename="$(find ghost_mgg_mycobot_description)/urdf/mech/mycobot_280_arm.urdf.xacro"/>
+    <xacro:include filename="$(find infrared_grasp_mycobot_description)/urdf/mech/mycobot_280_arm.urdf.xacro"/>
     <xacro:mycobot_280_arm
       base_link="$(arg base_link)"
       flange_link="$(arg flange_link)"
@@ -39,7 +39,7 @@
     <xacro:if value="$(arg use_gripper)">
         <xacro:property name="current_gripper" value="$(arg gripper_type)"/>
         <xacro:if value="${current_gripper == 'adaptive_gripper'}">
-            <xacro:include filename="$(find ghost_mgg_mycobot_description)/urdf/mech/adaptive_gripper.urdf.xacro"/>
+            <xacro:include filename="$(find infrared_grasp_mycobot_description)/urdf/mech/adaptive_gripper.urdf.xacro"/>
             <xacro:adaptive_gripper
                 parent="$(arg flange_link)"
                 prefix="$(arg prefix)"
@@ -49,17 +49,17 @@
         </xacro:if>
     </xacro:if>
 
-    <xacro:include filename="$(find ghost_mgg_mycobot_description)/urdf/control/gazebo_sim_ros2_control.urdf.xacro" />
+    <xacro:include filename="$(find infrared_grasp_mycobot_description)/urdf/control/gazebo_sim_ros2_control.urdf.xacro" />
     <xacro:load_gazebo_sim_ros2_control_plugin
       robot_name="$(arg robot_name)"
       use_gazebo="$(arg use_gazebo)"/>
 
-    <xacro:include filename="$(find ghost_mgg_mycobot_description)/urdf/control/mycobot_280_ros2_control.urdf.xacro" />
+    <xacro:include filename="$(find infrared_grasp_mycobot_description)/urdf/control/mycobot_280_ros2_control.urdf.xacro" />
     <xacro:mycobot_ros2_control
       prefix="$(arg prefix)"
       flange_link="$(arg flange_link)"
       use_gazebo="$(arg use_gazebo)"/>
 
-    <xacro:include filename="$(find ghost_mgg_mycobot_description)/urdf/sensors/intel_rgbd_cam_d435.urdf.xacro"/>
+    <xacro:include filename="$(find infrared_grasp_mycobot_description)/urdf/sensors/intel_rgbd_cam_d435.urdf.xacro"/>
 
 </robot>

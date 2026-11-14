@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(ghost_mgg_mycobot_description)
+project(infrared_grasp_mycobot_description)
 
 find_package(ament_cmake REQUIRED)
 

@@ -6,7 +6,7 @@ import yaml
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-DESCRIPTION_PACKAGE = REPO_ROOT / "src" / "ghost_mgg_mycobot_description"
+DESCRIPTION_PACKAGE = REPO_ROOT / "src" / "infrared_grasp_mycobot_description"
 
 ARM_JOINTS = [
     "link1_to_link2",
