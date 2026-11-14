@@ -6,9 +6,9 @@
 #include <behaviortree_cpp/action_node.h>
 #include <behaviortree_cpp/basic_types.h>
 
-#include "ghost_mgg_interfaces/msg/geometry_hypothesis.hpp"
+#include "infrared_grasp_interfaces/msg/geometry_hypothesis.hpp"
 
-namespace ghost_mgg_bt
+namespace infrared_grasp_bt
 {
 
 class SelectNextHypothesis : public BT::SyncActionNode
@@ -22,4 +22,4 @@ private:
   BT::NodeStatus tick() override;
 };
 
-}  // namespace ghost_mgg_bt
+}  // namespace infrared_grasp_bt

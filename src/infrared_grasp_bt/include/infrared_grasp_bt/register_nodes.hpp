@@ -6,10 +6,10 @@
 #include <behaviortree_cpp/bt_factory.h>
 #include <rclcpp/rclcpp.hpp>
 
-#include "ghost_mgg_bt/backend_registry.hpp"
-#include "ghost_mgg_bt/trial_logger.hpp"
+#include "infrared_grasp_bt/backend_registry.hpp"
+#include "infrared_grasp_bt/trial_logger.hpp"
 
-namespace ghost_mgg_bt
+namespace infrared_grasp_bt
 {
 void register_m0_nodes(
   BT::BehaviorTreeFactory & factory,
@@ -17,4 +17,4 @@ void register_m0_nodes(
   std::shared_ptr<BackendRegistry> registry,
   std::shared_ptr<TrialLogger> logger,
   const std::string & executor_name);
-}  // namespace ghost_mgg_bt
+}  // namespace infrared_grasp_bt

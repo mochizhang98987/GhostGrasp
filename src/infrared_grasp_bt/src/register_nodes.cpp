@@ -1,12 +1,12 @@
-#include "ghost_mgg_bt/register_nodes.hpp"
+#include "infrared_grasp_bt/register_nodes.hpp"
 
-#include "ghost_mgg_bt/execute_grasp_action_node.hpp"
-#include "ghost_mgg_bt/recover_geometry_action_node.hpp"
-#include "ghost_mgg_bt/report_trial_node.hpp"
-#include "ghost_mgg_bt/select_next_hypothesis_node.hpp"
-#include "ghost_mgg_bt/start_trial_node.hpp"
+#include "infrared_grasp_bt/execute_grasp_action_node.hpp"
+#include "infrared_grasp_bt/recover_geometry_action_node.hpp"
+#include "infrared_grasp_bt/report_trial_node.hpp"
+#include "infrared_grasp_bt/select_next_hypothesis_node.hpp"
+#include "infrared_grasp_bt/start_trial_node.hpp"
 
-namespace ghost_mgg_bt
+namespace infrared_grasp_bt
 {
 void register_m0_nodes(
   BT::BehaviorTreeFactory & factory,
@@ -37,4 +37,4 @@ void register_m0_nodes(
       return std::make_unique<ReportTrialNode>(name, config, logger);
     });
 }
-}  // namespace ghost_mgg_bt
+}  // namespace infrared_grasp_bt

@@ -8,7 +8,7 @@
 TEST(BTContracts, M0TreeUsesStrictBehaviorTreeCppAndRankedFallback)
 {
   const auto tree_path =
-    std::filesystem::path(GHOST_MGG_BT_SOURCE_DIR) / "trees/m0_dummy_recovery.xml";
+    std::filesystem::path(INFRARED_GRASP_BT_SOURCE_DIR) / "trees/m0_dummy_recovery.xml";
   ASSERT_TRUE(std::filesystem::exists(tree_path));
 
   std::ifstream in(tree_path);
@@ -30,7 +30,7 @@ TEST(BTContracts, M0TreeUsesStrictBehaviorTreeCppAndRankedFallback)
 TEST(BTContracts, RegistryContainsDummyBackendAndExecutor)
 {
   const auto registry_path =
-    std::filesystem::path(GHOST_MGG_BT_SOURCE_DIR) / "config/backend_registry.yaml";
+    std::filesystem::path(INFRARED_GRASP_BT_SOURCE_DIR) / "config/backend_registry.yaml";
   ASSERT_TRUE(std::filesystem::exists(registry_path));
 
   std::ifstream in(registry_path);
@@ -45,7 +45,7 @@ TEST(BTContracts, RegistryContainsDummyBackendAndExecutor)
 TEST(BTContracts, RegistryContainsMaskExtrusionBackend)
 {
   const auto registry_path =
-    std::filesystem::path(GHOST_MGG_BT_SOURCE_DIR) / "config/backend_registry.yaml";
+    std::filesystem::path(INFRARED_GRASP_BT_SOURCE_DIR) / "config/backend_registry.yaml";
   ASSERT_TRUE(std::filesystem::exists(registry_path));
 
   std::ifstream in(registry_path);
@@ -60,7 +60,7 @@ TEST(BTContracts, RegistryContainsMaskExtrusionBackend)
 TEST(BTContracts, M2TreeUsesSameActionContractForSimClosedLoop)
 {
   const auto tree_path =
-    std::filesystem::path(GHOST_MGG_BT_SOURCE_DIR) / "trees/m2_sim_closed_loop.xml";
+    std::filesystem::path(INFRARED_GRASP_BT_SOURCE_DIR) / "trees/m2_sim_closed_loop.xml";
   ASSERT_TRUE(std::filesystem::exists(tree_path));
 
   std::ifstream in(tree_path);
@@ -83,7 +83,7 @@ TEST(BTContracts, M2TreeUsesSameActionContractForSimClosedLoop)
 TEST(BTContracts, RegistryContainsM2MycobotSimExecutor)
 {
   const auto registry_path =
-    std::filesystem::path(GHOST_MGG_BT_SOURCE_DIR) / "config/backend_registry.yaml";
+    std::filesystem::path(INFRARED_GRASP_BT_SOURCE_DIR) / "config/backend_registry.yaml";
   ASSERT_TRUE(std::filesystem::exists(registry_path));
 
   std::ifstream in(registry_path);
@@ -98,9 +98,9 @@ TEST(BTContracts, RegistryContainsM2MycobotSimExecutor)
 TEST(BTContracts, ActionNodesDoNotUseFixedShortServerWait)
 {
   const auto recover_path =
-    std::filesystem::path(GHOST_MGG_BT_SOURCE_DIR) / "src/recover_geometry_action_node.cpp";
+    std::filesystem::path(INFRARED_GRASP_BT_SOURCE_DIR) / "src/recover_geometry_action_node.cpp";
   const auto execute_path =
-    std::filesystem::path(GHOST_MGG_BT_SOURCE_DIR) / "src/execute_grasp_action_node.cpp";
+    std::filesystem::path(INFRARED_GRASP_BT_SOURCE_DIR) / "src/execute_grasp_action_node.cpp";
   ASSERT_TRUE(std::filesystem::exists(recover_path));
   ASSERT_TRUE(std::filesystem::exists(execute_path));
 

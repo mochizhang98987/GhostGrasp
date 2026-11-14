@@ -1,11 +1,11 @@
-#include "ghost_mgg_bt/trial_logger.hpp"
+#include "infrared_grasp_bt/trial_logger.hpp"
 
 #include <fstream>
 #include <iomanip>
 #include <sstream>
 #include <stdexcept>
 
-namespace ghost_mgg_bt
+namespace infrared_grasp_bt
 {
 namespace
 {
@@ -64,7 +64,7 @@ void append_string_array(std::ostream & out, const std::vector<std::string> & va
 }
 
 std::vector<std::string> hypothesis_ids(
-  const std::vector<ghost_mgg_interfaces::msg::GeometryHypothesis> & hypotheses)
+  const std::vector<infrared_grasp_interfaces::msg::GeometryHypothesis> & hypotheses)
 {
   std::vector<std::string> ids;
   ids.reserve(hypotheses.size());
@@ -115,4 +115,4 @@ std::filesystem::path TrialLogger::write(const TrialLogRecord & record) const
   return path;
 }
 
-}  // namespace ghost_mgg_bt
+}  // namespace infrared_grasp_bt

@@ -3,7 +3,7 @@
 #include <string>
 #include <unordered_map>
 
-namespace ghost_mgg_bt
+namespace infrared_grasp_bt
 {
 
 struct BackendEndpoint
@@ -32,4 +32,4 @@ private:
   std::unordered_map<std::string, ExecutorEndpoint> executors_;
 };
 
-}  // namespace ghost_mgg_bt
+}  // namespace infrared_grasp_bt

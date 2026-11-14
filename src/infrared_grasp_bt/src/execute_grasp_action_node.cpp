@@ -1,10 +1,10 @@
-#include "ghost_mgg_bt/execute_grasp_action_node.hpp"
+#include "infrared_grasp_bt/execute_grasp_action_node.hpp"
 
 #include <algorithm>
 #include <chrono>
 #include <string>
 
-namespace ghost_mgg_bt
+namespace infrared_grasp_bt
 {
 namespace
 {
@@ -39,7 +39,7 @@ BT::PortsList ExecuteGraspActionNode::providedPorts()
 {
   return {
     BT::InputPort<std::string>("trial_id"),
-    BT::InputPort<ghost_mgg_interfaces::msg::GeometryHypothesis>("selected_hypothesis"),
+    BT::InputPort<infrared_grasp_interfaces::msg::GeometryHypothesis>("selected_hypothesis"),
     BT::InputPort<double>("max_runtime_sec"),
     BT::OutputPort<std::uint8_t>("execute_status"),
     BT::OutputPort<std::string>("execute_failure_reason"),
@@ -49,7 +49,7 @@ BT::PortsList ExecuteGraspActionNode::providedPorts()
 BT::NodeStatus ExecuteGraspActionNode::onStart()
 {
   std::string trial_id;
-  ghost_mgg_interfaces::msg::GeometryHypothesis hypothesis;
+  infrared_grasp_interfaces::msg::GeometryHypothesis hypothesis;
   timeout_sec_ = 2.0;
 
   if (!getInput("trial_id", trial_id) ||
@@ -132,4 +132,4 @@ void ExecuteGraspActionNode::onHalted()
   goal_handle_.reset();
 }
 
-}  // namespace ghost_mgg_bt
+}  // namespace infrared_grasp_bt

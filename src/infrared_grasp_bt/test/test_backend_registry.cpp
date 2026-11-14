@@ -4,12 +4,12 @@
 
 #include <gtest/gtest.h>
 
-#include "ghost_mgg_bt/backend_registry.hpp"
+#include "infrared_grasp_bt/backend_registry.hpp"
 
 TEST(BackendRegistry, ParsesBackendAndExecutorEndpoints)
 {
   const auto path =
-    std::filesystem::temp_directory_path() / "ghost_mgg_bt_registry_test.yaml";
+    std::filesystem::temp_directory_path() / "infrared_grasp_bt_registry_test.yaml";
   std::ofstream out(path);
   out << "backends:\n"
       << "  dummy:\n"
@@ -21,7 +21,7 @@ TEST(BackendRegistry, ParsesBackendAndExecutorEndpoints)
       << "    execute_action: /grasp_executors/dummy/execute\n";
   out.close();
 
-  const auto registry = ghost_mgg_bt::BackendRegistry::from_file(path.string());
+  const auto registry = infrared_grasp_bt::BackendRegistry::from_file(path.string());
 
   EXPECT_EQ(
     registry.backend("dummy").recover_action,
@@ -39,14 +39,14 @@ TEST(BackendRegistry, ParsesBackendAndExecutorEndpoints)
 TEST(BackendRegistry, ThrowsForMissingEndpoint)
 {
   const auto path =
-    std::filesystem::temp_directory_path() / "ghost_mgg_bt_registry_missing_test.yaml";
+    std::filesystem::temp_directory_path() / "infrared_grasp_bt_registry_missing_test.yaml";
   std::ofstream out(path);
   out << "backends: {}\nexecutors: {}\n";
   out.close();
 
-  const auto registry = ghost_mgg_bt::BackendRegistry::from_file(path.string());
+  const auto registry = infrared_grasp_bt::BackendRegistry::from_file(path.string());
 
-  EXPECT_THROW(registry.backend("ghost_mgg"), std::out_of_range);
+  EXPECT_THROW(registry.backend("infrared_grasp"), std::out_of_range);
   EXPECT_THROW(registry.executor("hardware"), std::out_of_range);
 
   std::filesystem::remove(path);

@@ -1,8 +1,8 @@
-#include "ghost_mgg_bt/select_next_hypothesis_node.hpp"
+#include "infrared_grasp_bt/select_next_hypothesis_node.hpp"
 
 #include <string>
 
-namespace ghost_mgg_bt
+namespace infrared_grasp_bt
 {
 
 SelectNextHypothesis::SelectNextHypothesis(
@@ -14,7 +14,7 @@ SelectNextHypothesis::SelectNextHypothesis(
 
 BT::PortsList SelectNextHypothesis::providedPorts()
 {
-  using Hypothesis = ghost_mgg_interfaces::msg::GeometryHypothesis;
+  using Hypothesis = infrared_grasp_interfaces::msg::GeometryHypothesis;
   return {
     BT::InputPort<std::vector<Hypothesis>>("hypotheses"),
     BT::BidirectionalPort<int>("hypothesis_index"),
@@ -26,7 +26,7 @@ BT::PortsList SelectNextHypothesis::providedPorts()
 
 BT::NodeStatus SelectNextHypothesis::tick()
 {
-  using Hypothesis = ghost_mgg_interfaces::msg::GeometryHypothesis;
+  using Hypothesis = infrared_grasp_interfaces::msg::GeometryHypothesis;
   std::vector<Hypothesis> hypotheses;
   int hypothesis_index = 0;
   std::vector<std::string> attempted_ids;
@@ -51,4 +51,4 @@ BT::NodeStatus SelectNextHypothesis::tick()
   return BT::NodeStatus::SUCCESS;
 }
 
-}  // namespace ghost_mgg_bt
+}  // namespace infrared_grasp_bt

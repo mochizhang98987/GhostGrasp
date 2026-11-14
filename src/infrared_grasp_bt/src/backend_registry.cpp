@@ -1,11 +1,11 @@
-#include "ghost_mgg_bt/backend_registry.hpp"
+#include "infrared_grasp_bt/backend_registry.hpp"
 
 #include <stdexcept>
 #include <utility>
 
 #include <yaml-cpp/yaml.h>
 
-namespace ghost_mgg_bt
+namespace infrared_grasp_bt
 {
 
 BackendRegistry BackendRegistry::from_file(const std::string & path)
@@ -52,4 +52,4 @@ void BackendRegistry::add_executor(const std::string & name, ExecutorEndpoint en
   executors_[name] = std::move(endpoint);
 }
 
-}  // namespace ghost_mgg_bt
+}  // namespace infrared_grasp_bt

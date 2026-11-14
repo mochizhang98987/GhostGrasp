@@ -1,13 +1,13 @@
-#include "ghost_mgg_bt/recover_geometry_action_node.hpp"
+#include "infrared_grasp_bt/recover_geometry_action_node.hpp"
 
 #include <algorithm>
 #include <chrono>
 #include <string>
 #include <vector>
 
-#include "ghost_mgg_interfaces/msg/observation_ref.hpp"
+#include "infrared_grasp_interfaces/msg/observation_ref.hpp"
 
-namespace ghost_mgg_bt
+namespace infrared_grasp_bt
 {
 namespace
 {
@@ -38,12 +38,12 @@ RecoverGeometryActionNode::RecoverGeometryActionNode(
 
 BT::PortsList RecoverGeometryActionNode::providedPorts()
 {
-  using Hypothesis = ghost_mgg_interfaces::msg::GeometryHypothesis;
+  using Hypothesis = infrared_grasp_interfaces::msg::GeometryHypothesis;
   return {
     BT::InputPort<std::string>("backend_name"),
     BT::InputPort<std::string>("trial_id"),
     BT::InputPort<std::string>("observation_id"),
-    BT::InputPort<ghost_mgg_interfaces::msg::ObservationRef>("observation_ref"),
+    BT::InputPort<infrared_grasp_interfaces::msg::ObservationRef>("observation_ref"),
     BT::InputPort<std::string>("target_label"),
     BT::InputPort<std::string>("shape_hint"),
     BT::InputPort<double>("max_runtime_sec"),
@@ -59,7 +59,7 @@ BT::NodeStatus RecoverGeometryActionNode::onStart()
   std::string backend_name;
   std::string trial_id;
   std::string observation_id;
-  ghost_mgg_interfaces::msg::ObservationRef observation;
+  infrared_grasp_interfaces::msg::ObservationRef observation;
   std::string target_label;
   std::string shape_hint;
   unsigned max_hypotheses = 3;
@@ -159,4 +159,4 @@ void RecoverGeometryActionNode::onHalted()
   goal_handle_.reset();
 }
 
-}  // namespace ghost_mgg_bt
+}  // namespace infrared_grasp_bt

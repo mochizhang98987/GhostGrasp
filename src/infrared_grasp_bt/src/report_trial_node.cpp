@@ -1,9 +1,9 @@
-#include "ghost_mgg_bt/report_trial_node.hpp"
+#include "infrared_grasp_bt/report_trial_node.hpp"
 
 #include <string>
 #include <vector>
 
-namespace ghost_mgg_bt
+namespace infrared_grasp_bt
 {
 namespace
 {
@@ -23,7 +23,7 @@ ReportTrialNode::ReportTrialNode(
 
 BT::PortsList ReportTrialNode::providedPorts()
 {
-  using Hypothesis = ghost_mgg_interfaces::msg::GeometryHypothesis;
+  using Hypothesis = infrared_grasp_interfaces::msg::GeometryHypothesis;
   return {
     BT::InputPort<std::string>("trial_id"),
     BT::InputPort<std::string>("observation_id"),
@@ -63,4 +63,4 @@ BT::NodeStatus ReportTrialNode::tick()
   return BT::NodeStatus::SUCCESS;
 }
 
-}  // namespace ghost_mgg_bt
+}  // namespace infrared_grasp_bt

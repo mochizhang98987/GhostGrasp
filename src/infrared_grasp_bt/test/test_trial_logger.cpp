@@ -4,16 +4,16 @@
 
 #include <gtest/gtest.h>
 
-#include "ghost_mgg_bt/trial_logger.hpp"
-#include "ghost_mgg_interfaces/msg/geometry_hypothesis.hpp"
+#include "infrared_grasp_bt/trial_logger.hpp"
+#include "infrared_grasp_interfaces/msg/geometry_hypothesis.hpp"
 
 TEST(TrialLogger, WritesOneJsonLineWithM0Fields)
 {
-  const auto dir = std::filesystem::temp_directory_path() / "ghost_mgg_bt_logger_test";
+  const auto dir = std::filesystem::temp_directory_path() / "infrared_grasp_bt_logger_test";
   std::filesystem::remove_all(dir);
 
-  ghost_mgg_bt::TrialLogger logger(dir.string());
-  ghost_mgg_bt::TrialLogRecord record;
+  infrared_grasp_bt::TrialLogger logger(dir.string());
+  infrared_grasp_bt::TrialLogRecord record;
   record.trial_id = "trial_m0_1";
   record.observation_id = "obs_m0_1";
   record.tree_name = "m0_dummy_recovery";
@@ -24,9 +24,9 @@ TEST(TrialLogger, WritesOneJsonLineWithM0Fields)
   record.selected_hypothesis_id = "h2";
   record.attempted_hypothesis_ids = {"h1", "h2"};
 
-  ghost_mgg_interfaces::msg::GeometryHypothesis h1;
+  infrared_grasp_interfaces::msg::GeometryHypothesis h1;
   h1.hypothesis_id = "h1";
-  ghost_mgg_interfaces::msg::GeometryHypothesis h2;
+  infrared_grasp_interfaces::msg::GeometryHypothesis h2;
   h2.hypothesis_id = "h2";
   record.hypotheses = {h1, h2};
 

@@ -9,10 +9,10 @@
 #include <behaviortree_cpp/bt_factory.h>
 #include <rclcpp/rclcpp.hpp>
 
-#include "ghost_mgg_bt/backend_registry.hpp"
-#include "ghost_mgg_bt/register_nodes.hpp"
-#include "ghost_mgg_bt/trial_logger.hpp"
-#include "ghost_mgg_interfaces/msg/geometry_hypothesis.hpp"
+#include "infrared_grasp_bt/backend_registry.hpp"
+#include "infrared_grasp_bt/register_nodes.hpp"
+#include "infrared_grasp_bt/trial_logger.hpp"
+#include "infrared_grasp_interfaces/msg/geometry_hypothesis.hpp"
 
 namespace
 {
@@ -32,13 +32,13 @@ int main(int argc, char ** argv)
 
   const auto registry_path = node->declare_parameter<std::string>(
     "backend_registry_path",
-    default_share_file("ghost_mgg_bt", "config/backend_registry.yaml"));
+    default_share_file("infrared_grasp_bt", "config/backend_registry.yaml"));
   const auto tree_path = node->declare_parameter<std::string>(
     "tree_path",
-    default_share_file("ghost_mgg_bt", "trees/m0_dummy_recovery.xml"));
+    default_share_file("infrared_grasp_bt", "trees/m0_dummy_recovery.xml"));
   const auto log_dir = node->declare_parameter<std::string>(
     "trial_log_dir",
-    (std::filesystem::current_path() / "log/ghost_mgg_trials").string());
+    (std::filesystem::current_path() / "log/infrared_grasp_trials").string());
   const auto backend_name = node->declare_parameter<std::string>("backend_name", "dummy");
   const auto executor_name = node->declare_parameter<std::string>("executor_name", "dummy");
   const auto target_label = node->declare_parameter<std::string>("target_label", "m0_dummy_target");
@@ -47,12 +47,12 @@ int main(int argc, char ** argv)
   const auto execute_timeout_sec = node->declare_parameter<double>("execute_timeout_sec", 2.0);
   const auto max_hypotheses = node->declare_parameter<int>("max_hypotheses", 3);
 
-  const auto registry = std::make_shared<ghost_mgg_bt::BackendRegistry>(
-    ghost_mgg_bt::BackendRegistry::from_file(registry_path));
-  const auto logger = std::make_shared<ghost_mgg_bt::TrialLogger>(log_dir);
+  const auto registry = std::make_shared<infrared_grasp_bt::BackendRegistry>(
+    infrared_grasp_bt::BackendRegistry::from_file(registry_path));
+  const auto logger = std::make_shared<infrared_grasp_bt::TrialLogger>(log_dir);
 
   BT::BehaviorTreeFactory factory;
-  ghost_mgg_bt::register_m0_nodes(factory, node, registry, logger, executor_name);
+  infrared_grasp_bt::register_m0_nodes(factory, node, registry, logger, executor_name);
 
   auto blackboard = BT::Blackboard::create();
   blackboard->set("backend_name", backend_name);
@@ -67,7 +67,7 @@ int main(int argc, char ** argv)
   blackboard->set("attempted_hypothesis_ids", std::vector<std::string>{});
   blackboard->set(
     "hypotheses",
-    std::vector<ghost_mgg_interfaces::msg::GeometryHypothesis>{});
+    std::vector<infrared_grasp_interfaces::msg::GeometryHypothesis>{});
   blackboard->set("final_status", std::string{});
 
   auto tree = factory.createTreeFromFile(tree_path, blackboard);

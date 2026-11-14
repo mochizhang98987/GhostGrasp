@@ -1,13 +1,13 @@
-#include "ghost_mgg_bt/start_trial_node.hpp"
+#include "infrared_grasp_bt/start_trial_node.hpp"
 
 #include <chrono>
 #include <sstream>
 #include <string>
 #include <vector>
 
-#include "ghost_mgg_interfaces/msg/observation_ref.hpp"
+#include "infrared_grasp_interfaces/msg/observation_ref.hpp"
 
-namespace ghost_mgg_bt
+namespace infrared_grasp_bt
 {
 
 StartTrialNode::StartTrialNode(const std::string & name, const BT::NodeConfig & config)
@@ -20,7 +20,7 @@ BT::PortsList StartTrialNode::providedPorts()
   return {
     BT::BidirectionalPort<std::string>("trial_id"),
     BT::BidirectionalPort<std::string>("observation_id"),
-    BT::OutputPort<ghost_mgg_interfaces::msg::ObservationRef>("observation_ref"),
+    BT::OutputPort<infrared_grasp_interfaces::msg::ObservationRef>("observation_ref"),
     BT::OutputPort<int>("hypothesis_index"),
     BT::OutputPort<std::vector<std::string>>("attempted_hypothesis_ids"),
   };
@@ -42,7 +42,7 @@ BT::NodeStatus StartTrialNode::tick()
     observation_id = "obs_m0_" + std::to_string(stamp);
   }
 
-  ghost_mgg_interfaces::msg::ObservationRef observation;
+  infrared_grasp_interfaces::msg::ObservationRef observation;
   observation.observation_id = observation_id;
   observation.cache_namespace = "m0_dummy";
   observation.rgb_frame_id = "camera_color_optical_frame";
@@ -63,4 +63,4 @@ BT::NodeStatus StartTrialNode::tick()
   return BT::NodeStatus::SUCCESS;
 }
 
-}  // namespace ghost_mgg_bt
+}  // namespace infrared_grasp_bt

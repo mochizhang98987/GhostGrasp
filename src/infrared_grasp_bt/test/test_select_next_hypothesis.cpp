@@ -4,12 +4,12 @@
 #include <behaviortree_cpp/bt_factory.h>
 #include <gtest/gtest.h>
 
-#include "ghost_mgg_bt/select_next_hypothesis_node.hpp"
-#include "ghost_mgg_interfaces/msg/geometry_hypothesis.hpp"
+#include "infrared_grasp_bt/select_next_hypothesis_node.hpp"
+#include "infrared_grasp_interfaces/msg/geometry_hypothesis.hpp"
 
 namespace
 {
-using ghost_mgg_interfaces::msg::GeometryHypothesis;
+using infrared_grasp_interfaces::msg::GeometryHypothesis;
 
 std::vector<GeometryHypothesis> make_hypotheses()
 {
@@ -24,7 +24,7 @@ std::vector<GeometryHypothesis> make_hypotheses()
 TEST(SelectNextHypothesis, SelectsRankedHypothesesUntilExhausted)
 {
   BT::BehaviorTreeFactory factory;
-  factory.registerNodeType<ghost_mgg_bt::SelectNextHypothesis>("SelectNextHypothesis");
+  factory.registerNodeType<infrared_grasp_bt::SelectNextHypothesis>("SelectNextHypothesis");
 
   auto blackboard = BT::Blackboard::create();
   blackboard->set("hypotheses", make_hypotheses());

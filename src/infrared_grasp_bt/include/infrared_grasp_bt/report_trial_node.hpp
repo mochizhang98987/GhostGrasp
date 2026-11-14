@@ -7,10 +7,10 @@
 #include <behaviortree_cpp/action_node.h>
 #include <behaviortree_cpp/basic_types.h>
 
-#include "ghost_mgg_bt/trial_logger.hpp"
-#include "ghost_mgg_interfaces/msg/geometry_hypothesis.hpp"
+#include "infrared_grasp_bt/trial_logger.hpp"
+#include "infrared_grasp_interfaces/msg/geometry_hypothesis.hpp"
 
-namespace ghost_mgg_bt
+namespace infrared_grasp_bt
 {
 
 class ReportTrialNode : public BT::SyncActionNode
@@ -29,4 +29,4 @@ private:
   std::shared_ptr<TrialLogger> logger_;
 };
 
-}  // namespace ghost_mgg_bt
+}  // namespace infrared_grasp_bt

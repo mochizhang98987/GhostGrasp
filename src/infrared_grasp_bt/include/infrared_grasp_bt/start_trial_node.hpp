@@ -5,7 +5,7 @@
 #include <behaviortree_cpp/action_node.h>
 #include <behaviortree_cpp/basic_types.h>
 
-namespace ghost_mgg_bt
+namespace infrared_grasp_bt
 {
 
 class StartTrialNode : public BT::SyncActionNode
@@ -19,4 +19,4 @@ private:
   BT::NodeStatus tick() override;
 };
 
-}  // namespace ghost_mgg_bt
+}  // namespace infrared_grasp_bt

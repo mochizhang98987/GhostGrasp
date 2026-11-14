@@ -4,9 +4,9 @@
 #include <string>
 #include <vector>
 
-#include "ghost_mgg_interfaces/msg/geometry_hypothesis.hpp"
+#include "infrared_grasp_interfaces/msg/geometry_hypothesis.hpp"
 
-namespace ghost_mgg_bt
+namespace infrared_grasp_bt
 {
 
 struct TrialLogRecord
@@ -20,7 +20,7 @@ struct TrialLogRecord
   std::string final_status;
   std::string selected_hypothesis_id;
   std::vector<std::string> attempted_hypothesis_ids;
-  std::vector<ghost_mgg_interfaces::msg::GeometryHypothesis> hypotheses;
+  std::vector<infrared_grasp_interfaces::msg::GeometryHypothesis> hypotheses;
   std::string failure_reason;
   double runtime_sec = 0.0;
 };
@@ -36,4 +36,4 @@ private:
   std::filesystem::path directory_;
 };
 
-}  // namespace ghost_mgg_bt
+}  // namespace infrared_grasp_bt
