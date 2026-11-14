@@ -1,18 +1,18 @@
-# GhostGrasp
+# Infrared Grasp
 
 ### Grasping Transparent Objects in Darkness from Depth-Failure Evidence
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-> **Release status:** this repository currently hosts the GhostGrasp project page and visual material. The paper, source code, trained models, configurations, and evaluation tools will be added in a later release.
+> **Release status:** this repository currently hosts the Infrared Grasp project page and visual material. The paper, source code, trained models, configurations, and evaluation tools will be added in a later release.
 
-![GhostGrasp overview: transparent-object depth failures remain visible to active infrared sensing and support top grasping in daylight and darkness.](assets/ghostgrasp_overview.png)
+![Infrared Grasp overview: transparent-object depth failures remain visible to active infrared sensing and support top grasping in daylight and darkness.](assets/infrared_grasp_overview.png)
 
-*GhostGrasp treats structured RGB-D sensing failures as evidence. When visible RGB disappears, active infrared sensing still supports persistent object hypotheses and the same top-grasp task.*
+*Infrared Grasp treats structured RGB-D sensing failures as evidence. When visible RGB disappears, active infrared sensing still supports persistent object hypotheses and the same top-grasp task.*
 
 ## Overview
 
-Transparent objects often appear to an RGB-D camera as missing depth, isolated returns, or measurements that pass through the object and reach the table. Surface-completion methods attempt to repair these measurements before grasp planning. GhostGrasp takes the opposite approach: it keeps the failures and uses their spatial and temporal structure as evidence that an object is present.
+Transparent objects often appear to an RGB-D camera as missing depth, isolated returns, or measurements that pass through the object and reach the table. Surface-completion methods attempt to repair these measurements before grasp planning. Infrared Grasp takes the opposite approach: it keeps the failures and uses their spatial and temporal structure as evidence that an object is present.
 
 The system integrates depth-failure evidence on a table-plane grid, maintains object hypotheses over time, and converts each stable hypothesis into an action-oriented proxy containing a footprint, centre, opening width, yaw candidates, and grasp height. An RGB or raw-IR detector can locate and update a hypothesis, but it cannot create one without supporting depth evidence.
 
@@ -35,7 +35,7 @@ These figures describe the tested fixed-view tabletop setup; they are not claims
 
 ## Method
 
-![GhostGrasp pipeline from RGB, raw infrared, and failed depth to persistent hypotheses and a top-grasp proxy.](assets/ghostgrasp_pipeline.png)
+![Infrared Grasp pipeline from RGB, raw infrared, and failed depth to persistent hypotheses and a top-grasp proxy.](assets/infrared_grasp_pipeline.png)
 
 The pipeline has four main stages:
 

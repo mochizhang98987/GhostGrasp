@@ -6,16 +6,16 @@ import time
 from pathlib import Path
 
 import rclpy
-from ghost_mgg_interfaces.action import ExecuteGrasp
-from ghost_mgg_interfaces.msg import GeometryHypothesis, GeometryHypothesisArray
+from infrared_grasp_interfaces.action import ExecuteGrasp
+from infrared_grasp_interfaces.msg import GeometryHypothesis, GeometryHypothesisArray
 from rclpy.action import ActionClient
 from rclpy.qos import DurabilityPolicy, QoSProfile, ReliabilityPolicy
 from std_msgs.msg import String
 
 
-DEFAULT_HYPOTHESES_TOPIC = "/ghost_mgg/m4_joint_hypotheses"
+DEFAULT_HYPOTHESES_TOPIC = "/infrared_grasp/m4_joint_hypotheses"
 DEFAULT_EXECUTE_ACTION = "/grasp_executors/moveit_sim/execute"
-DEFAULT_EXECUTED_TOPIC = "/ghost_mgg/m4_executed_hypotheses"
+DEFAULT_EXECUTED_TOPIC = "/infrared_grasp/m4_executed_hypotheses"
 DEFAULT_OUTPUT_JSON = Path("reports/m4_joint_hypothesis_execute/result.json")
 
 
@@ -327,7 +327,7 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     rclpy.init()
-    node = rclpy.create_node("ghost_mgg_m4_joint_hypothesis_execute_client")
+    node = rclpy.create_node("infrared_grasp_m4_joint_hypothesis_execute_client")
     action_client = ActionClient(node, ExecuteGrasp, args.execute_action)
     try:
         if args.reset_executed_before_run:

@@ -9,8 +9,8 @@ from rclpy.qos import DurabilityPolicy, QoSProfile, ReliabilityPolicy
 from sensor_msgs.msg import Image
 
 
-DEFAULT_COLOR_TOPIC = "/ghost_mgg/d435/color/image_raw"
-DEFAULT_MASK_TOPIC = "/ghost_mgg/d435/external_target_mask"
+DEFAULT_COLOR_TOPIC = "/infrared_grasp/d435/color/image_raw"
+DEFAULT_MASK_TOPIC = "/infrared_grasp/d435/external_target_mask"
 
 
 def decode_color_image(image: Image) -> np.ndarray:

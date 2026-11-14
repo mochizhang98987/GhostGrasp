@@ -9,7 +9,7 @@ from rclpy.qos import DurabilityPolicy, QoSProfile, ReliabilityPolicy
 from sensor_msgs.msg import Image
 
 
-DEFAULT_TOPIC = "/ghost_mgg/d435/external_target_mask"
+DEFAULT_TOPIC = "/infrared_grasp/d435/external_target_mask"
 
 
 def make_roi_mask(width: int, height: int, bbox: tuple[int, int, int, int]) -> np.ndarray:
@@ -42,7 +42,7 @@ def mask_to_msg(mask: np.ndarray, frame_id: str) -> Image:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Publish a transient-local mono8 target ROI mask for M4 live GHOST-MGG.",
+        description="Publish a transient-local mono8 target ROI mask for M4 live INFRARED-GRASP.",
     )
     parser.add_argument("--topic", default=DEFAULT_TOPIC)
     parser.add_argument("--width", type=int, default=640)
@@ -63,7 +63,7 @@ def main() -> int:
         return 2
 
     rclpy.init()
-    node = rclpy.create_node("ghost_mgg_publish_m4_target_roi_mask")
+    node = rclpy.create_node("infrared_grasp_publish_m4_target_roi_mask")
     qos = QoSProfile(depth=1)
     qos.durability = DurabilityPolicy.TRANSIENT_LOCAL
     qos.reliability = ReliabilityPolicy.RELIABLE
