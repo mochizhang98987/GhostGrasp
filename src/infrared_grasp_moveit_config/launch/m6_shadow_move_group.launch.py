@@ -10,15 +10,15 @@ from moveit_configs_utils import MoveItConfigsBuilder
 
 
 def build_m6_shadow_moveit_config():
-    description_share = get_package_share_directory('ghost_mgg_mycobot_description')
-    moveit_share = get_package_share_directory('ghost_mgg_moveit_config')
+    description_share = get_package_share_directory('infrared_grasp_mycobot_description')
+    moveit_share = get_package_share_directory('infrared_grasp_moveit_config')
 
     mycobot_xacro = str(
         Path(description_share) / 'urdf' / 'robots' / 'mycobot_280.urdf.xacro'
     )
 
     moveit_config = (
-        MoveItConfigsBuilder('mycobot_280', package_name='ghost_mgg_moveit_config')
+        MoveItConfigsBuilder('mycobot_280', package_name='infrared_grasp_moveit_config')
         .robot_description(
             file_path=mycobot_xacro,
             mappings={
@@ -29,7 +29,7 @@ def build_m6_shadow_moveit_config():
             },
         )
         .robot_description_semantic(
-            file_path=str(Path(moveit_share) / 'config' / 'ghost_mgg_mycobot_280.srdf')
+            file_path=str(Path(moveit_share) / 'config' / 'infrared_grasp_mycobot_280.srdf')
         )
         .robot_description_kinematics(file_path='config/kinematics.yaml')
         .planning_pipelines(
@@ -106,7 +106,7 @@ def generate_launch_description():
         arguments=[
             '-d',
             str(
-                Path(get_package_share_directory('ghost_mgg_moveit_config'))
+                Path(get_package_share_directory('infrared_grasp_moveit_config'))
                 / 'rviz'
                 / 'm2_moveit.rviz'
             ),

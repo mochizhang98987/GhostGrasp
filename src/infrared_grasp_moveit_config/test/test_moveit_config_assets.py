@@ -6,7 +6,7 @@ import yaml
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-MOVEIT_PACKAGE = REPO_ROOT / "src" / "ghost_mgg_moveit_config"
+MOVEIT_PACKAGE = REPO_ROOT / "src" / "infrared_grasp_moveit_config"
 
 ARM_JOINTS = [
     "link1_to_link2",
@@ -44,7 +44,7 @@ def load_m6_shadow_launch_module():
 
 
 def test_srdf_declares_arm_group_joints_and_world_virtual_joint():
-    srdf_path = MOVEIT_PACKAGE / "config" / "ghost_mgg_mycobot_280.srdf"
+    srdf_path = MOVEIT_PACKAGE / "config" / "infrared_grasp_mycobot_280.srdf"
     assert srdf_path.exists()
 
     robot = ET.parse(srdf_path).getroot()
@@ -93,7 +93,7 @@ def test_joint_limits_define_acceleration_limits_for_time_parameterization():
 
 
 def test_srdf_declares_safe_named_group_states_for_arm():
-    srdf_path = MOVEIT_PACKAGE / "config" / "ghost_mgg_mycobot_280.srdf"
+    srdf_path = MOVEIT_PACKAGE / "config" / "infrared_grasp_mycobot_280.srdf"
     robot = ET.parse(srdf_path).getroot()
 
     for state_name, expected_positions in SAFE_GROUP_STATES.items():
@@ -108,7 +108,7 @@ def test_srdf_declares_safe_named_group_states_for_arm():
 
 
 def test_srdf_allows_closed_gripper_fingertip_contact():
-    srdf_text = read_text("config/ghost_mgg_mycobot_280.srdf")
+    srdf_text = read_text("config/infrared_grasp_mycobot_280.srdf")
 
     assert (
         '<disable_collisions link1="gripper_left1" link2="gripper_right1" '
@@ -121,8 +121,8 @@ def test_move_group_and_rviz_launch_files_reference_expected_packages_and_nodes(
     rviz_launch = read_text("launch/m2_moveit_rviz.launch.py")
 
     for required in [
-        "ghost_mgg_mycobot_description",
-        "ghost_mgg_moveit_config",
+        "infrared_grasp_mycobot_description",
+        "infrared_grasp_moveit_config",
         "move_group",
     ]:
         assert required in move_group_launch

@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <package format="3">
-  <name>ghost_mgg_moveit_config</name>
+  <name>infrared_grasp_moveit_config</name>
   <version>0.0.1</version>
-  <description>Minimal MoveIt 2 configuration for the GHOST-MGG myCobot 280 M2 scene.</description>
-  <maintainer email="maintainer@example.com">GhostGrasp Maintainers</maintainer>
+  <description>Minimal MoveIt 2 configuration for the INFRARED-GRASP myCobot 280 M2 scene.</description>
+  <maintainer email="maintainer@example.com">Infrared Grasp Maintainers</maintainer>
   <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <exec_depend>ament_index_python</exec_depend>
-  <exec_depend>ghost_mgg_mycobot_description</exec_depend>
+  <exec_depend>infrared_grasp_mycobot_description</exec_depend>
   <exec_depend>joint_state_publisher</exec_depend>
   <exec_depend>launch</exec_depend>
   <exec_depend>launch_ros</exec_depend>
